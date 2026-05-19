@@ -21,3 +21,7 @@ acc.deposit(100, "EUR")
 balance1 = acc.balance
 assert balance1 > 1000 and balance1 < 1200 , f"Unexpected value returned, got {acc.balance}"
 
+
+# save test
+from save_transaction import Save
+Save.save_transaction(acc)
