@@ -1,3 +1,5 @@
+from currency_conversion import ConversionRate
+
 class Account:
     def __init__(self, name, currency="SEK"):
         self.name = name
@@ -7,8 +9,11 @@ class Account:
         self.transactions = []  # list of dicts
 
     # Method deposit
-    def deposit(self, amount):
+    def deposit(self, amount, currency="SEK"):
         try:
+            if currency != self.currency:
+                rate = ConversionRate.get_rate(currency, self.currency)
+                amount = amount * rate
             if amount <= 0:
                 raise ValueError("Amount must be positive.")
             self.balance += amount
@@ -18,8 +23,11 @@ class Account:
             print(f"Amount error: {e}")
 
     # Method withdraw    
-    def withdraw(self, amount):
+    def withdraw(self, amount, currency="SEK"):
         try:
+            if currency != self.currency:
+                rate = ConversionRate.get_rate(currency, self.currency)
+                amount = amount * rate
             if amount<= 0:
                 raise ValueError("Amount must be positive.")
             if amount > self.balance:
